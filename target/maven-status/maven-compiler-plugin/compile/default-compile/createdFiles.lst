@@ -1,0 +1,13 @@
+com\lee\recipe\domain\Ingredient.class
+com\lee\recipe\service\RecipeService.class
+com\lee\recipe\bootstrap\RecipeBootstrap.class
+com\lee\recipe\repository\UnitOfMeasureRepository.class
+com\lee\recipe\domain\Recipe.class
+com\lee\recipe\domain\UnitOfMeasure.class
+com\lee\recipe\SpringRecipeApplication.class
+com\lee\recipe\domain\Notes.class
+com\lee\recipe\domain\Category.class
+com\lee\recipe\repository\RecipeRepository.class
+com\lee\recipe\repository\CategoryRepository.class
+com\lee\recipe\domain\Difficulty.class
+com\lee\recipe\controllers\IndexController.class
