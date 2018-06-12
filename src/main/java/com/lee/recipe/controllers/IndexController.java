@@ -27,8 +27,8 @@ public class IndexController {
 		log.info("Inside getIndexPage method::");
 		
 		model.addAttribute("recipes",recipeService.getAllRecipes());
-		return "index";
+		model.addAttribute("categories",recipeService.getAllCategories());
+		return "home";
 	}
-	
-	
+			
 }

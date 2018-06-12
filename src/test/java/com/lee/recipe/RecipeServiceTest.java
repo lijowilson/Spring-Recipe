@@ -12,20 +12,24 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.lee.recipe.domain.Recipe;
+import com.lee.recipe.repository.CategoryRepository;
 import com.lee.recipe.repository.RecipeRepository;
 import com.lee.recipe.service.RecipeService;
 
 public class RecipeServiceTest {
 
 	RecipeService recipeService;
-	
+		
 	@Mock
 	RecipeRepository recipeRepo;
+	
+	@Mock
+	CategoryRepository categoryRepo;
 	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeService(recipeRepo);
+		recipeService = new RecipeService(categoryRepo,recipeRepo);
 	}
 
 	@Test

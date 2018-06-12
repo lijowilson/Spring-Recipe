@@ -15,6 +15,14 @@ public class Ingredient {
 	
 	
 	/**
+	 * 
+	 */
+	public Ingredient() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
 	 * @param description
 	 * @param amount
 	 * @param unitOfMeasure

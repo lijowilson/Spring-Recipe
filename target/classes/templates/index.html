@@ -28,6 +28,9 @@
       <th scope="col">CookTime</th>
       <th scope="col">PrepTime</th>
       <th scope="col">Direction</th>
+      <th scope="col">image</th>
+      <th scope="col">Ingredients</th>
+      <th scope="col">Difficulty</th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +40,14 @@
 	        <td th:text="${recipe.cookTime}">Tasty Goodnees</td>
 	        <td th:text="${recipe.prepTime}">Tasty Goodnees</td>
 	        <td th:text="${recipe.direction}">Tasty Goodnees</td>
+	        <td style="height: 400px;width: 300px;"><img th:src="@{${'/images/'+recipe.imageURL}}"/></td>
+	        <td th:each="ingredients : ${recipe.ingredients}">
+	        	<p th:text="${ingredients.amount}">
+	        </td>difficultyval--->
+	        <p th:value="${recipe.difficulty}"/>
+	      <!-- <td class="col-4"  th:each="star:${#numbers.sequence(0, 5)}">
+                    <i class="fa fa-star" aria-hidden="true" th:text="${star}"></i>
+            </td>-->
   </tr>
    
   </tbody>

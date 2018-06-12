@@ -43,6 +43,8 @@ public class Recipe {
 	@Lob
 	private byte[] images;
 	
+	private String imageURL;
+	
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private Notes notes;
@@ -50,7 +52,7 @@ public class Recipe {
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="recipe")
 	private Set<Ingredient> ingredients = new HashSet<>();
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated
 	private Difficulty difficulty;
 	
 	@ManyToMany

@@ -1,7 +1,9 @@
 INSERT INTO CATEGORY(description) values('American');
 INSERT INTO CATEGORY(description) values('Italiano');
 INSERT INTO CATEGORY(description) values('Chinese');
-INSERT INTO CATEGORY(description) values('Mexican');
+INSERT INTO CATEGORY(description) values('British');
+INSERT INTO CATEGORY(description) values('Bahrain');
+INSERT INTO CATEGORY(description) values('Swiss');
 
 --for unit of measure
 INSERT INTO UNIT_OF_MEASURE(uom) values('Tablespoon');
