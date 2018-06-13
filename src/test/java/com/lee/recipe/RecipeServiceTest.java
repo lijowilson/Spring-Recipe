@@ -1,6 +1,6 @@
 package com.lee.recipe;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -14,11 +14,11 @@ import org.mockito.MockitoAnnotations;
 import com.lee.recipe.domain.Recipe;
 import com.lee.recipe.repository.CategoryRepository;
 import com.lee.recipe.repository.RecipeRepository;
-import com.lee.recipe.service.RecipeService;
+import com.lee.recipe.service.RecipeServiceImpl;
 
 public class RecipeServiceTest {
 
-	RecipeService recipeService;
+	RecipeServiceImpl recipeService;
 		
 	@Mock
 	RecipeRepository recipeRepo;
@@ -29,7 +29,7 @@ public class RecipeServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeService(categoryRepo,recipeRepo);
+		recipeService = new RecipeServiceImpl(categoryRepo,recipeRepo);
 	}
 
 	@Test
