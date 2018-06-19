@@ -69,7 +69,9 @@
         <div class="col-12">
           <!-- Picture -->
           <div class="col-md-8 pull-left wow swing">
-            <img th:src="@{${'/images/'+recipe.imageURL}}" alt="bbq-pork-ribs" class="recipe-picture" />
+           <!--  <img th:src="@{${'/images/'+recipe.imageURL}}" alt="bbq-pork-ribs" class="recipe-picture" /> -->
+            <img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+         
           </div>
           <!-- Info -->
           <div class="col-md-4 pull-right wow lightSpeedIn">
@@ -114,7 +116,7 @@
 	            <th:block th:each="ingredients : ${recipe.ingredients}">
 	             
 	            	<dt th:text="${ingredients.amount} % 1 == 0?  ${#numbers.formatDecimal(ingredients.amount,1,0,'WHITESPACE')} : ${ingredients.amount}">10</dt>
-	            	<dd th:text="${ingredients.unitOfMeasure.uom+' '+ingredients.description}">country-style pork ribs</dd>
+	            	<dd th:text="${ingredients.unitOfMeasure.description+' '+ingredients.description}">country-style pork ribs</dd>
 	            </th:block>
             </dl>
           </div>
@@ -126,7 +128,7 @@
           <div class="recipe-directions">
             <h3>Directions</h3>
             <ol>
-           <p  th:utext="${recipe.direction}"></p>
+           <p  th:utext="${recipe.directions}"></p>
               <!-- <li>Preheat oven to 325.</li>
               <li>Place ribs meaty side up in an ungreased baking dish.</li>
               <li>Sprinkle with garlic powder, salt, and pepper.</li>

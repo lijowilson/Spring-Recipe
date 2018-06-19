@@ -6,9 +6,13 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(exclude= {"recipe"})
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = {"recipe"})
+
 @Entity
 public class Ingredient {
 
@@ -29,16 +33,22 @@ public class Ingredient {
 	 */
 	public Ingredient(String description, BigDecimal amount, UnitOfMeasure unitOfMeasure,Recipe recipeTemp) {
 		this.description = description;
-		Amount = amount;
+		this.amount = amount;
 		this.unitOfMeasure = unitOfMeasure;
 		this.recipe = recipeTemp;
 	}
 
+	 public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+	        this.description = description;
+	        this.amount = amount;
+	        this.unitOfMeasure = uom;
+	    }
+	 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long Id;
 	private String description;
-	private BigDecimal Amount;
+	private BigDecimal amount;
 	
 	@ManyToOne
 	private Recipe recipe;

@@ -7,7 +7,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title th:text="${recipe.description}+'| Lees Recipe Book'"></title>
+  <title th:text="${recipe.description} == null?  'New Recipe' : ${recipe.description}+'| Lees Recipe Book'"></title>
 
   <!-- Favicon
   ============ -->
@@ -59,19 +59,36 @@
   =================== -->
   <section id="recipe">
     <div class="container">
+	<form  id="recipeForm" th:object="${recipe}" th:action="@{/recipe/save}" method="post" enctype="multipart/form-data">
+	 <input type="hidden" th:field="*{id}"/>
+	
       <div class="row">
         <!-- Title -->
         <div class="col-12">
-          <h2 th:text="${recipe.description}">Barbecue Pork Ribs</h2>
+          <input id="recipeTitle" th:value="${recipe.description}" th:field="*{description}" placeholder="Recipe Title"></input>
         </div>
       </div>
       <div class="row vertical-align">
         <div class="col-12">
           <!-- Picture -->
           <div class="col-md-8 pull-left wow swing">
-           <!--  <img th:src="@{${'/images/'+recipe.imageURL}}" alt="bbq-pork-ribs" class="recipe-picture" /> -->
-            <img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
-         
+		  	<input type="hidden" th:value="${recipe.imageBase64}" id="dumyimgurl" />
+		  	<!-- && !#strings.isEmpty(recipe.images) -->
+		  	  <img src="/images/icons/Infinity.gif" alt="logo" id="loaderIcon" class="d-none"/>
+			<img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+         	<!--Blank_Image 
+          <img th:src="@{${'/images/Blank_Image.jpg'}}" alt="Sample Image" class="recipe-picture" /> -->
+			
+	        	    <div class="upload-file-div">
+						<i class="fa fa-upload file-ico" aria-hidden="true"></i>
+						<span class="name">No file selected</span>
+						 <th:block th:if="${null != recipe.imageBase64}">
+						<input type="button" name="upload" id="upload" value="upload"/>
+						 </th:block>
+					</div>
+					<input id="uploadfile" type="file"  name="uploadfile"  class="upload-file-input">
+					
+			
           </div>
           <!-- Info -->
           <div class="col-md-4 pull-right wow lightSpeedIn">
@@ -83,7 +100,7 @@
                   <i class="fa fa-clock-o" aria-hidden="true"></i>
                 </div>
                 <div class="col-6">Time</div>
-                <div class="col-4" th:text="${recipe.cookTime}">3:00 H</div>
+                <input class="col-4 form-control" type="text"  th:value="${recipe.cookTime}" th:field="*{cookTime}"></input>
               </div>
               <!-- Difficulty -->
               <div class="row">
@@ -91,17 +108,20 @@
                   <i class="fa fa-area-chart" aria-hidden="true"></i>
                 </div>
                 <div class="col-6">Difficulty</div>
-                <div class="col-4" >
-                    <i th:text="${recipe.difficulty}"></i>
-                </div>
-              </div>
+                 <select class="col-4 form-control" th:field="*{difficulty}">
+                  <option th:each="difficulty : ${T(com.lee.recipe.domain.Difficulty).values()}"
+				          th:value="${difficulty.name()}" 
+				          th:text="${difficulty}" class="difficultyDropDown">
+				   </option>
+                 </select>
+              	</div>
               <!-- Serves -->
               <div class="row">
                 <div class="col-2 text-center">
                   <i class="fa fa-users" aria-hidden="true"></i>
                 </div>
                 <div class="col-6">Servings</div>
-                <div class="col-4" th:text="${recipe.servings}">5</div>
+                <input type="text" class="col-4 form-control" th:value="${recipe.servings}" th:field="*{servings}"></input>
               </div>
             </div>
           </div>
@@ -112,13 +132,39 @@
         <div class="col-12">
           <div class="recipe-ingredients">
             <h3>Ingredients</h3>
-            <dl class="ingredients-list">
-	            <th:block th:each="ingredients : ${recipe.ingredients}">
-	             
-	            	<dt th:text="${ingredients.amount} % 1 == 0?  ${#numbers.formatDecimal(ingredients.amount,1,0,'WHITESPACE')} : ${ingredients.amount}">10</dt>
-	            	<dd th:text="${ingredients.unitOfMeasure.description+' '+ingredients.description}">country-style pork ribs</dd>
+         
+	            <th:block th:if="${not #lists.isEmpty(recipe.ingredients)}" th:each="ingredients : ${recipe.ingredients}">
+	             <dl class="ingredients-list">
+	            	<input type="text" th:value="${ingredients.amount} % 1 == 0?  ${#numbers.formatDecimal(ingredients.amount,1,0,'WHITESPACE')} : ${ingredients.amount}"></input>
+	            	<span class="col-4 form-controll">
+	                     <button class="btn btn-danger btn-remove" type="button">
+	                       <i class="fa fa-minus ingredientsIcon"></i>
+	                     </button>
+                	 </span>
+					<input type="hidden" th:value="${ingredients.description}"  class="col-6 form-controll"></input>
+					
+                 </dl>
 	            </th:block>
-            </dl>
+				<th:block th:if="${#lists.isEmpty(recipe.ingredients)}">
+				<dl class="ingredients-list">
+				<input class="col-2 form-controll amt" type="text" th:field="*{ingredients[0].amount}" placeholder="Amount"></input>
+		            <select class="col-2 form-controll uomSelect" th:field="*{ingredients[0].unitOfMeasure.id}" onchange="updateUOMVal($(this));">
+                        <option th:each="uomEach : ${uomList}"
+                                th:value="${uomEach.id}"
+                                th:text="${uomEach.description}">Each</option>
+                    </select>
+		            <input type="hidden" class="d-none" th:field="*{ingredients[0].unitOfMeasure.description}"></input>
+					<input type="text" th:field="*{ingredients[0].description}" placeholder="description" class="col-6 form-controll desc"></input>
+					<span class="col-6 form-controll">
+	                     <button class="btn btn-success btn-add" type="button">
+	                       <i class="fa fa-plus ingredientsIcon"></i>
+	                     </button>
+	                 </span>
+	                 <input type="hidden" class="index" name="hiddenIndexSelector" value="0" />
+                  </dl>
+                 </th:block>
+				
+           
           </div>
         </div>
       </div>
@@ -127,8 +173,22 @@
         <div class="col-12">
           <div class="recipe-directions">
             <h3>Directions</h3>
-            <ol>
-           <p  th:utext="${recipe.directions}"></p>
+            <ol id="ol-directions">
+            <th:block th:utext="${recipe.directions}">
+          
+          
+          </th:block>
+          
+            <th:block th:if="${#strings.isEmpty(recipe.directions)}">
+            <li class="li-directions">
+	           	<input class="col-10 emptyIngredients" type="text" th:field="*{directions}"></input>
+	           	<span class="col-2 form-controll">
+	                <button class="btn btn-success btn-add" type="button">
+	                  <i class="fa fa-plus ingredientsIcon"></i>
+	                </button>
+	             </span>
+	          </li>
+            </th:block>
               <!-- <li>Preheat oven to 325.</li>
               <li>Place ribs meaty side up in an ungreased baking dish.</li>
               <li>Sprinkle with garlic powder, salt, and pepper.</li>
@@ -141,6 +201,12 @@
           </div>
         </div>
       </div>
+      <!-- Recipe Notes dummy -->
+      <input type="hidden" value="dummynotes" th:field="*{notes.recipeNotes}" />
+      
+      <button type="submit" class="btn btn-success">
+		    <i class="icon-circle-arrow-right icon-large"></i> Save
+	  </button>
       <!-- Back to recipes -->
       <div class="row wow rollIn">
         <div class="col-12 text-center">
@@ -150,8 +216,9 @@
           </a>
         </div>
       </div>
+	</form>
     </div>
-  </section>
+	</section>
 
   <!-- Website Footer
   =================== -->

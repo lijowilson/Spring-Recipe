@@ -1,5 +1,8 @@
 package com.lee.recipe.converters;
 
+
+import java.util.Base64;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -45,8 +48,15 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
         command.setServings(source.getServings());
         command.setSource(source.getSource());
         command.setUrl(source.getUrl());
+        command.setImageURL(source.getImageURL());
         command.setNotes(notesConverter.convert(source.getNotes()));
-
+        if(null != source.getImages()) {
+        command.setImages(source.getImages());
+        
+        String encodedImage = Base64.getEncoder().encodeToString(source.getImages());
+        System.out.println("encode image:::"+encodedImage);
+        command.setImageBase64(encodedImage);
+        }
         if (source.getCategory() != null && source.getCategory().size() > 0){
             source.getCategory()
                     .forEach((Category category) -> command.getCategories().add(categoryConveter.convert(category)));

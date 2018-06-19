@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.lee.recipe.commands.IngredientCommand;
 import com.lee.recipe.domain.Ingredient;
+import com.lee.recipe.domain.Recipe;
 
 /**
  * Created by jt on 6/21/17.
@@ -28,6 +29,12 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 
         final Ingredient ingredient = new Ingredient();
         ingredient.setId(source.getId());
+        if(source.getRecipeId() != null){
+            Recipe recipe = new Recipe();
+            recipe.setId(source.getRecipeId());
+            ingredient.setRecipe(recipe);
+            recipe.addIngredient(ingredient);
+        }
         ingredient.setAmount(source.getAmount());
         ingredient.setDescription(source.getDescription());
         ingredient.setUnitOfMeasure(uomConverter.convert(source.getUnitOfMeasure()));

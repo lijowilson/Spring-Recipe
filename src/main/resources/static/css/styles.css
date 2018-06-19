@@ -176,6 +176,13 @@ table {
   margin-bottom: 24px;
   margin-top: 12px;
 }
+#recipe #recipeTitle{
+	color: #333;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2em;
+    margin-bottom: 24px;
+    margin-top: 12px;
+}
 #recipe h3 {
   background-color: #f1f1f1;
   margin-top: 24px;
@@ -332,4 +339,57 @@ footer {
 .footer-author a {
   color: #f9f9f9;
   font-weight: bold;
+}
+.entry:not(:first-of-type)
+{
+    margin-top: 10px;
+}
+
+
+.recipe-ingredients input{
+border-color: #a44c9f;
+}
+.ingredientsIcon{
+	
+	font-size:32px;
+}
+.recipe-item {
+   position: relative;
+}
+
+.edit-button-img,.trash-button-img {
+   position: absolute;
+   top: 20px;
+   left: 2px;
+   font-size: 26px;
+   
+}
+
+.trash-button-img{
+	left: 33px;
+}
+
+.btn-google{
+	width: 220px;
+    top: -110px;
+    left: 916px;
+}
+#difficulty{
+	font-size: 0.75em !important;
+}
+.upload-file-input{
+	display: none !important;	
+}
+.upload-file-div i {
+    color: #a44c9f;
+} 
+#loaderIcon{
+    top: 107px;
+    left: 210px;
+    z-index: 30;
+    position: absolute;
+}
+.uomSelect{
+	border-color: #a44c9f;
+    font-size: 21px;
 }

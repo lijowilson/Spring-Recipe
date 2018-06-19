@@ -16,6 +16,7 @@ import com.lee.recipe.converters.RecipeToRecipeCommand;
 import com.lee.recipe.domain.Recipe;
 import com.lee.recipe.repository.CategoryRepository;
 import com.lee.recipe.repository.RecipeRepository;
+import com.lee.recipe.repository.UnitOfMeasureRepository;
 import com.lee.recipe.service.RecipeServiceImpl;
 
 public class RecipeServiceTest {
@@ -34,12 +35,14 @@ public class RecipeServiceTest {
 	@Mock
 	RecipeToRecipeCommand recipeToRecipeCommand;
 	
+	@Mock
+	UnitOfMeasureRepository unitOfMeasureRepository;
 	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		
-		recipeService = new RecipeServiceImpl(categoryRepo,recipeRepo,recipeCommandToRecipe,recipeToRecipeCommand);
+		recipeService = new RecipeServiceImpl(categoryRepo,recipeRepo,recipeCommandToRecipe,recipeToRecipeCommand,unitOfMeasureRepository);
 	}
 
 	@Test

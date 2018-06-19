@@ -33,6 +33,7 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}"  />
   <link rel="stylesheet" type="text/css" th:href="@{/css/animate.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-social.css}" />
 
   <!-- Modernizr file
   =================== -->
@@ -52,6 +53,9 @@
   <section id="logo">
     <div class="container text-center wow pulse">
       <img src="images/logo-white.svg" alt="logo" />
+       <a class="btn btn-block btn-social btn-google">
+		    <span class="fa fa-google"></span> Sign in with Google
+	  </a>
       <br />
       <h1>Lee's Recipe Book</h1>
     </div>
@@ -98,7 +102,7 @@
       <div class="row">
         <div class="col-12">
           <h2>Recipes</h2>
-        </div>
+        </div>    
       </div>
       <div class="row">
        <th:block th:each="recipe : ${recipes}">
@@ -108,8 +112,18 @@
 	            <a th:href="@{${'/recipe/show/'+recipe.id}}">
 	              <img th:src="@{${'/images/'+recipe.imageURL}}" alt="bbq-pork-ribs" />
 	            </a>
+	            <a th:href="@{${'/recipe/'+recipe.id+'/update'}}">
+	                <span class="edit-button-img">
+	            		<i class="fa fa-pencil-square-o fa-5" aria-hidden="true"></i>
+				  	</span>
+			  	</a>
+			  	<a th:href="@{${'/recipe/'+recipe.id+'/delete'}}">
+		             <span class="trash-button-img">
+	            		<i class="fa fa-trash fa-5" aria-hidden="true"></i>
+				  	 </span>
+			  	</a>
 	            <br />
-	            <h3 th:text="${recipe.description}">Barbecue Pork Ribs</h3>
+	            <h3 th:text="${recipe.description}"></h3>
 	          </div>
 	        </div>
 	   

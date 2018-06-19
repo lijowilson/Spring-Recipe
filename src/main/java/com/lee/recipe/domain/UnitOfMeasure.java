@@ -3,8 +3,11 @@ package com.lee.recipe.domain;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class UnitOfMeasure {
 
