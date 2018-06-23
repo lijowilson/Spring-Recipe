@@ -2,6 +2,7 @@ package com.lee.recipe.bootstrap;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.lee.recipe.domain.Category;
@@ -160,6 +162,16 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		try {
+			ClassPathResource classPathResource = new ClassPathResource("pexels-photo-1147687.jpeg");
+			 File fileObj = classPathResource.getFile();
+			 System.out.println("file size"+fileObj.length()+" file name"+file.getAbsolutePath());
+			 log.info("file size"+fileObj.length()+" file name"+file.getAbsolutePath());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
         guacRecipe.getCategory().add(americanCategory);
         guacRecipe.getCategory().add(britishCategory);
 
