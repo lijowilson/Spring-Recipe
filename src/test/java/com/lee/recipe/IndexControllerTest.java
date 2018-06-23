@@ -56,7 +56,7 @@ public class IndexControllerTest {
 		//when(recipeService.getAllRecipes()).thenReturn(recipList);
 		
 		
-		assertEquals(indexController.getIndexPage(model), "index");
+		assertEquals(indexController.getIndexPage(model), "home");
 		verify(recipeService,times(1)).getAllRecipes();
 		verify(model,times(1)).addAttribute(eq("recipes"),anyList());
 		
