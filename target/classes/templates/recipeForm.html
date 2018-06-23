@@ -133,15 +133,23 @@
           <div class="recipe-ingredients">
             <h3>Ingredients</h3>
          
-	            <th:block th:if="${not #lists.isEmpty(recipe.ingredients)}" th:each="ingredients : ${recipe.ingredients}">
+	            <th:block th:if="${not #lists.isEmpty(recipe.ingredients)}" th:each="ingredients,iter : ${recipe.ingredients}">
 	             <dl class="ingredients-list">
-	            	<input type="text" th:value="${ingredients.amount} % 1 == 0?  ${#numbers.formatDecimal(ingredients.amount,1,0,'WHITESPACE')} : ${ingredients.amount}"></input>
+	            	<input type="text" name="ingredients[${iter.index}].amount" th:value="${ingredients.amount} % 1 == 0?  ${#numbers.formatDecimal(ingredients.amount,1,0,'WHITESPACE')} : ${ingredients.amount}"></input>
+	            	<select class="col-2 form-controll uomSelect" name="ingredients[${iter.index}].unitOfMeasure.id" onchange="updateUOMVal($(this));">
+                        <option th:each="uomEach : ${uomList}"
+                         		th:selected = "${ingredients.id == uomEach.id}"
+                                th:value="${uomEach.id}"
+                                th:text="${uomEach.description}">Each</option>
+                    </select>
+		            <input type="hidden" class="d-none" name="ingredients[${iter.index}].unitOfMeasure.description"></input>
+					<input type="text" name="ingredients[${iter.index}].description" th:value="${ingredients.description}" placeholder="description" class="col-6 form-controll desc"></input>
 	            	<span class="col-4 form-controll">
 	                     <button class="btn btn-danger btn-remove" type="button">
 	                       <i class="fa fa-minus ingredientsIcon"></i>
 	                     </button>
                 	 </span>
-					<input type="hidden" th:value="${ingredients.description}"  class="col-6 form-controll"></input>
+					
 					
                  </dl>
 	            </th:block>
