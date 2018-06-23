@@ -73,10 +73,16 @@
           <!-- Picture -->
           <div class="col-md-8 pull-left wow swing">
 		  	<input type="hidden" th:value="${recipe.imageBase64}" id="dumyimgurl" />
+		  		<input type="hidden" th:value="${ recipe.imageURL}" id="dumyimgurlpath" />
 		  	<!--test && !#strings.isEmpty(recipe.images) -->
 		  	  <img src="/images/icons/Infinity.gif" alt="logo" id="loaderIcon" class="d-none"/>
-			<img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
-         	<!--Blank_Image 
+		  	  <th:block th:if="${recipe.imageBase64 == null && recipe.imageURL != null}">
+		  	  		<img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/'+recipe.imageURL}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+          	  </th:block>
+		  	  <th:block th:unless="${recipe.imageBase64 == null && recipe.imageURL != null}">
+		  	  	<img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+		  	  </th:block>
+		    	<!--Blank_Image 
           <img th:src="@{${'/images/Blank_Image.jpg'}}" alt="Sample Image" class="recipe-picture" /> -->
 			
 	        	    <div class="upload-file-div">

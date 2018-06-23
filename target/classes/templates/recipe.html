@@ -70,8 +70,12 @@
           <!-- Picture -->
           <div class="col-md-8 pull-left wow swing">
            <!--  <img th:src="@{${'/images/'+recipe.imageURL}}" alt="bbq-pork-ribs" class="recipe-picture" /> -->
-            <img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
-         
+          <th:block th:if="${recipe.imageBase64 == null && recipe.imageURL != null}">
+		  	 <img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/'+recipe.imageURL}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+          </th:block>
+	  	  <th:block th:unless="${recipe.imageBase64 == null && recipe.imageURL != null}">
+	  	  	<img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+	  	  </th:block>
           </div>
           <!-- Info -->
           <div class="col-md-4 pull-right wow lightSpeedIn">

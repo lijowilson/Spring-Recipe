@@ -156,21 +156,14 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		File file = new File(classLoader.getResource(fileName).getFile());
 		try {
 			byte[] byteArTemp = Files.readAllBytes(file.toPath());
-			guacRecipe.setImages(byteArTemp);
+			//guacRecipe.setImages(byteArTemp);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		try {
-			ClassPathResource classPathResource = new ClassPathResource("pexels-photo-1147687.jpeg");
-			 File fileObj = classPathResource.getFile();
-			 System.out.println("file size"+fileObj.length()+" file name"+file.getAbsolutePath());
-			 log.info("file size"+fileObj.length()+" file name"+file.getAbsolutePath());
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		
 		
         guacRecipe.getCategory().add(americanCategory);
         guacRecipe.getCategory().add(britishCategory);
@@ -242,7 +235,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
       		try {
       			byte[] byteArTemp = Files.readAllBytes(file1.toPath());
       			
-      			tacosRecipe.setImages(byteArTemp);
+      			//tacosRecipe.setImages(byteArTemp);
       		} catch (IOException e) {
       			// TODO Auto-generated catch block
       			e.printStackTrace();
