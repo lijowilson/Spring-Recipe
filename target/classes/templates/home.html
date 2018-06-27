@@ -110,7 +110,12 @@
 	        <div class="col-lg-4 col-md-6 col-sm-12 wow fadeIn">
 	          <div class="recipe-item text-center">
 	            <a th:href="@{${'/recipe/show/'+recipe.id}}">
-	              <img th:src="@{${'/images/'+recipe.imageURL}}" alt="bbq-pork-ribs" />
+	             <th:block th:if="${recipe.imageBase64 == null && recipe.imageURL != null}">
+			  		 <img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/'+recipe.imageURL}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+		          </th:block>
+			  	  <th:block th:unless="${recipe.imageBase64 == null && recipe.imageURL != null}">
+			  	  	<img th:src="${(recipe.imageBase64 != null) ? 'data:image/png;base64,'+recipe.imageBase64 : '/images/Blank_Image.jpg'}" alt="Sample Image" class="recipe-picture" id="base_image_url"/>
+			  	  </th:block>
 	            </a>
 	            <a th:href="@{${'/recipe/'+recipe.id+'/update'}}">
 	                <span class="edit-button-img">

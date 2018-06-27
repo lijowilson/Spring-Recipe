@@ -1,53 +1,152 @@
 package com.lee.recipe.bootstrap;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import static org.mockito.Mockito.RETURNS_MOCKS;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import com.lee.recipe.domain.Category;
-import com.lee.recipe.domain.Difficulty;
-import com.lee.recipe.domain.Ingredient;
-import com.lee.recipe.domain.Notes;
-import com.lee.recipe.domain.Recipe;
 import com.lee.recipe.domain.UnitOfMeasure;
 import com.lee.recipe.repository.CategoryRepository;
-import com.lee.recipe.repository.RecipeRepository;
 import com.lee.recipe.repository.UnitOfMeasureRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-@Profile({"default"})
-public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
+@Profile({"dev","prod"})
+public class RecipeBootstrapMySQL implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
-    private final RecipeRepository recipeRepository;
+   // private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
+    public RecipeBootstrapMySQL(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
-        this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        recipeRepository.saveAll(getRecipes());
-    }
+	public void onApplicationEvent(ContextRefreshedEvent event) {
 
+		log.info("started with loading bootstrap data..");
+
+		if(null != categoryRepository && categoryRepository.count() == 0L)
+		loadCategory();
+
+		log.info("Started with loading bootstrap data for uom");
+
+		if(null != unitOfMeasureRepository && unitOfMeasureRepository.count() == 0L)
+		loadUOM();
+
+	}
+
+    //loading category
+	private void loadCategory() {
+
+		log.info("loading bootstrap category data");
+
+		Category cat1 = null;
+
+		String description = "American";
+		cat1 = new Category();
+		cat1.setDescription(description);
+		categoryRepository.save(cat1);
+
+		description = "Italiano";
+		cat1 = new Category();
+		cat1.setDescription(description);
+		categoryRepository.save(cat1);
+
+		description = "Chinese";
+		cat1 = new Category();
+		cat1.setDescription(description);
+		categoryRepository.save(cat1);
+
+		description = "British";
+		cat1 = new Category();
+		cat1.setDescription(description);
+		categoryRepository.save(cat1);
+
+		description = "Bahrain";
+		cat1 = new Category();
+		cat1.setDescription(description);
+		categoryRepository.save(cat1);
+
+		description = "Swiss";
+		cat1 = new Category();
+		cat1.setDescription(description);
+		categoryRepository.save(cat1);
+
+		log.info("Done with loading bootstrap data for category");
+	}
+    
+    //loading uom
+	private void loadUOM() {
+
+		log.info("started with loading uom data");
+		UnitOfMeasure uom = null;
+		String uomStr = "";
+
+		uomStr = "Tablespoon";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Teaspoon";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Ounce";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Inches";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Litre";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Each";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Dash";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Pint";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		uomStr = "Cup";
+		uom = new UnitOfMeasure();
+		uom.setUom(uomStr);
+		uom.setUom(uomStr);
+		unitOfMeasureRepository.save(uom);
+
+		log.info("Done with loading uom data");
+	}
+    /*
     private List<Recipe> getRecipes() {
     
     	log.warn("getRecipes", "Method Entry :: getRecipes()");
@@ -246,4 +345,5 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         log.info("done with taco recipes");
         return recipes;
     }
+    */
 }

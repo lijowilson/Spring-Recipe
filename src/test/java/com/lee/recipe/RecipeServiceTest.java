@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.lee.recipe.commands.RecipeCommand;
 import com.lee.recipe.converters.RecipeCommandToRecipe;
 import com.lee.recipe.converters.RecipeToRecipeCommand;
 import com.lee.recipe.domain.Recipe;
@@ -48,8 +49,8 @@ public class RecipeServiceTest {
 	@Test
 	public void test() {
 		//fail("Not yet implemented");
-		Recipe recip = new Recipe();
-		List<Recipe> recipList =new ArrayList<>();
+		RecipeCommand recip = new RecipeCommand();
+		List<RecipeCommand> recipList =new ArrayList<>();
 		recipList.add(recip);
 		when(recipeService.getAllRecipes()).thenReturn(recipList);
 		

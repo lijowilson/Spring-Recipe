@@ -10,7 +10,7 @@ import com.lee.recipe.domain.Category;
 import com.lee.recipe.domain.Recipe;
 
 public interface RecipeService {
-	 List<Recipe> getAllRecipes();
+	List<RecipeCommand> getAllRecipes();
 
 	 Recipe getRecipeById(Long Id);
 

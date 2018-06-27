@@ -72,11 +72,16 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 
-	public List<Recipe> getAllRecipes(){
+	public List<RecipeCommand> getAllRecipes(){
 		log.info("inside getAllRecipes Method ...");
 		List<Recipe> recipeList = new ArrayList<>();
 		recipeRepo.findAll().iterator().forEachRemaining(recipeList::add);
-		return recipeList;
+		List<RecipeCommand> recipeCommList = new ArrayList<>();
+		for(Recipe recip:recipeList) {
+			recipeCommList.add(recipeToRecipeCommand.convert(recip));
+		}
+		;
+		return recipeCommList;
 	}
 
 	public Recipe getRecipeById(Long Id){
